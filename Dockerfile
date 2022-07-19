@@ -1,8 +1,4 @@
-FROM openjdk:8-jre-alpine
-
+FROM tomcat
+COPY ./target/hello-world.war /usr/local/tomcat/webapps
+RUN cp -r /usr/local/tomcat/webapps.dist/* /usr/local/tomcat/webapps
 EXPOSE 8080
-
-COPY ./target/*.war /usr/app/
-WORKDIR /usr/app
-
-CMD java  *.war
