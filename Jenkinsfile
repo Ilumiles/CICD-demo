@@ -16,6 +16,18 @@ pipeline {
       }
      }
    }
+    stage ('Deploy To dockerhub') {
+      steps{
+        script {
+          echo "building the docker image..."
+      withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+        sh 'docker build -t ilumiles/learning:1.0 .'
+        sh "echo $PASS | docker login -u $USER --password-stdin"
+        sh 'docker push ilumiles/learning:1.0'
+        }
+      }
+     }
+   }
  }
 }
 
