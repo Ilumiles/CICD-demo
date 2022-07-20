@@ -9,10 +9,18 @@ pipeline {
         sh 'mvn clean install -DskipTest'
       }
     }
+    stage ('build and push') {
+        steps {
+            withCredentials([UsernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                sh 'docker build -t ilumiles/learning:jma-2.0'
+                sh "echo $PASS |docker login -u $USER –password-stdin"
+                sh "docker push ilumiles/learning:jma-2.0"}
+        }
+      }
     stage ('Deploy To Tomcat Server') {
       steps{
         script {
-       deploy adapters: [tomcat9(credentialsId: 'tomact-credentials', path: '', url: 'http://3.87.195.214:8080/')], contextPath: 'web', war: '**/*.war'
+       deploy adapters: [tomcat9(credentialsId: 'tomact-credentials', path: '', url: 'http://18.205.157.190:8080/')], contextPath: 'web', war: '**/*.war'
       }
      }
    }
