@@ -13,7 +13,7 @@ pipeline {
         steps {
             withCredentials([UsernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                 sh 'docker build -t ilumiles/learning:jma-2.0'
-                sh "echo $PASS |docker login -u $USER –password-stdin"
+                sh "echo $PASS |docker login -u $USER – password-stdin"
                 sh "docker push ilumiles/learning:jma-2.0"}
         }
       }
