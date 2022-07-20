@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
        imagename = "ilumiles/learning"
-       registryCredential = 'DockerHub'
+       registryCredential = 'dockerhub-credentials'
        dockerImage = ''
            }
   tools {
