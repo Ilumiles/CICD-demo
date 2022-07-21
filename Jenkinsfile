@@ -42,9 +42,9 @@ pipeline {
         steps{
           script {
             docker.withRegistry(
-              "https://702640455637.dkr.ecr.us-east-1.amazonaws.com/ilumiles", "ecr:us-east-1:ilumiles"){
-              def myImage =  docker.build("ilumiles")
-              myImage.push('1.0')
+              "https://702640455637.dkr.ecr.us-east-1.amazonaws.com/ilumiles", "ecr:us-east-1:my.aws.credentials"){
+              dockerImage.push("$BUILD_NUMBER")
+              dockerImage.push('latest')
             }
           }
         }
