@@ -39,20 +39,22 @@ pipeline {
                         }
             }
       stage ('Deploy To ECR') {
-      steps{
-        script {
-          docker.withRegistry(
-            "https://702640455637.dkr.ecr.us-east-1.amazonaws.com/ilumiles", "ecr:us-east-1:ilumiles"){
-            def myImage =  docker.build("ilumiles")
-            myImage.push('1.0')
+        steps{
+          script {
+            docker.withRegistry(
+              "https://702640455637.dkr.ecr.us-east-1.amazonaws.com/ilumiles", "ecr:us-east-1:ilumiles"){
+              def myImage =  docker.build("ilumiles")
+              myImage.push('1.0')
+            }
           }
-         }
-    stage ('Deploy To Tomcat Server') {
-      steps{
-        script {
-         deploy adapters:  [tomcat9(credentialsId: 'tomact-credentials', path: '', url: 'http://18.205.157.190:8080/')], contextPath: 'web', war: '**/*.war'
+        }
       }
-     }
-   }
- }
+      stage ('Deploy To Tomcat Server') {
+        steps{
+          script {
+          deploy adapters:  [tomcat9(credentialsId: 'tomact-credentials', path: '', url: 'http://18.205.157.190:8080/')], contextPath: 'web', war: '**/*.war'}
+          }
+        }
+  }
 }
+  
