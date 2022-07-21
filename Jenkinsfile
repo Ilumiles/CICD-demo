@@ -38,6 +38,15 @@ pipeline {
               sh "docker rmi $imagename:latest"
                         }
             }
+      stage ('Deploy To ECR') {
+      steps{
+        script {
+          docker.withRegistry(
+            "https://702640455637.dkr.ecr.us-east-1.amazonaws.com/ilumiles", "ecr:us-east-1:ilumiles"){
+            def myImage =  docker.build("ilumiles")
+            myImage.push('1.0')
+          }
+         }
     stage ('Deploy To Tomcat Server') {
       steps{
         script {
