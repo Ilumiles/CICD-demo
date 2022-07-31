@@ -4,11 +4,7 @@ pipeline {
         maven 'Maven' 
            }
     stages {
-        stage('Git checkout') {
-            steps {
-                git 'https://github.com/Ilumiles/CICD-demo.git' 
-            }
-        }
+        
         
         stage('Build with maven') {
             steps {
