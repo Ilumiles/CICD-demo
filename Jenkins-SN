@@ -1,10 +1,12 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'Maven' 
+           }
     stages {
         stage('Git checkout') {
             steps {
-                git 'https://github.com/Ilumiles/CICD-demo.git'
+                git 'https://github.com/Ilumiles/CICD-demo.git' 
             }
         }
         
