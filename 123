@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage (' build'){
             steps {
-                sh " mvn clean test && mvn install"
+                sh " mvn clean install"
             }
         }
         stage ('code scan'){
