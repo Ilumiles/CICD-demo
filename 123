@@ -1,0 +1,25 @@
+pipeline{
+    agent any
+    tool{
+        maven "Maven"
+    }
+    stages{
+        stage (' build'){
+            steps {
+                sh " mvn clean test && mvn install"
+            }
+        }
+        stage ('code scan'){
+            steps {
+                withSonarQubeEnv('sonarserver'){
+                    sh "mvn -f pom.xml sonar:sonar" 
+                }
+            }
+        }
+        stage (" quality gate"){
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+    }
+}
